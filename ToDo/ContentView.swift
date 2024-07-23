@@ -9,13 +9,50 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
+        TabView {
+            MenuView()
+            SettingView()
+        }
+    }
+}
+
+struct MenuView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundStyle(.tint)
+                .frame(width: 100, height: 100)
+                .background(Color(.systemGray2))
             Text("Hello, world!")
+                .font(.title)
+                .foregroundStyle(Color(.systemGray2))
         }
-        .padding()
+        .frame(width: 100, height: 500)
+        .padding(.leading, 10)
+        .tabItem {
+            Label("Menu", systemImage: "list.dash")
+        }
+    }
+}
+
+struct SettingView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Image(systemName: "globe")
+                .imageScale(.large)
+                .foregroundStyle(.tint)
+                .frame(width: 100, height: 100)
+                .background(Color(.systemGray2))
+            Text("Setting")
+                .font(.title)
+                .foregroundStyle(Color(.systemGray2))
+        }
+        .frame(width: 100, height: 500)
+        .padding(.leading, 10)
+        .tabItem {
+            Label("Setting", systemImage: "list.dash")
+        }
     }
 }
 
