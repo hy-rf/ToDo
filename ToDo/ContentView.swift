@@ -22,14 +22,11 @@ struct MenuView: View {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundStyle(.tint)
-                .frame(width: 100, height: 100)
                 .background(Color(.systemGray2))
-            Text("Hello, world!")
+            Text("Menu")
                 .font(.title)
                 .foregroundStyle(Color(.systemGray2))
         }
-        .frame(width: 100, height: 500)
-        .padding(.leading, 10)
         .tabItem {
             Label("Menu", systemImage: "list.dash")
         }
@@ -42,7 +39,6 @@ struct SettingView: View {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundStyle(.tint)
-                .frame(width: 100, height: 100)
                 .background(Color(.systemGray2))
             Text("Setting")
                 .font(.title)
