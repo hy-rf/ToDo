@@ -17,25 +17,41 @@ struct ContentView: View {
 }
 
 struct MenuView: View {
+    @State var isSearchBarShow: Bool = false
+    @State var input: String = ""
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-                .background(Color(.systemGray2))
+        NavigationStack {
             Text("Menu")
                 .font(.title)
                 .foregroundStyle(Color(.systemGray2))
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading, content: {
+                        if isSearchBarShow {
+                            TextField("input", text: $input)
+                        }
+                        else {
+                            Text("a tool")
+                        }
+                    })
+                    ToolbarItem(placement: .topBarTrailing, content: {
+                        Button(action: {
+                            isSearchBarShow = !isSearchBarShow
+                        }, label: {
+                            Image(systemName: "magnifyingglass")
+                        })
+                    })
+                }
         }
         .tabItem {
             Label("Menu", systemImage: "list.dash")
         }
+        
     }
 }
 
 struct SettingView: View {
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        NavigationStack() {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundStyle(.tint)
