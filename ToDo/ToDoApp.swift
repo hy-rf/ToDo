@@ -22,9 +22,9 @@ struct ToDoApp: App {
             }
         }()
     var body: some Scene {
-        WindowGroup {
+        WindowGroup(makeContent: {
             RootView()
-        }
+        })
         .modelContainer(sharedModelContainer)
     }
 }

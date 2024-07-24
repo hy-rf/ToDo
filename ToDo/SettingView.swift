@@ -10,11 +10,11 @@ import SwiftUI
 struct SettingView: View {
     var body: some View {
         NavigationStack(root: {
-            List {
+            List(content: {
                 NavigationLink(destination: Text("Account"), label: {
                     Text("Account")
                 })
-            }
+            })
             .background(Color(.systemGray2))
             .toolbar {
                 ToolbarItem(placement: .topBarLeading, content: {

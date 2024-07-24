@@ -29,12 +29,10 @@ struct TodoEditor: View {
                     Text(editorTitle)
                 })
                 ToolbarItem(placement: .confirmationAction, content: {
-                    Button("Save") {
-                        withAnimation {
-                            save(context: modelContext)
-                            dismiss()
-                        }
-                    }
+                    Button("Save", action: {
+                        save(context: modelContext)
+                        dismiss()
+                    })
                 })
             }
         })
