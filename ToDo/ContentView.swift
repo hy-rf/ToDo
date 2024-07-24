@@ -6,57 +6,45 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
+    
     var body: some View {
         TabView {
-            MenuView()
+            TodoView()
             SettingView()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
-struct MenuView: View {
-    @State var isSearchBarShow: Bool = true
-    @State var input: String = ""
+struct TodoView: View {
+    @Environment(\.modelContext) private var modelContext
+    @Query private var todos: [Todo]
+    @State private var isEditing: Bool = false
     var body: some View {
-        NavigationView {
-            VStack {
-                Text("Menu")
-                    .font(.title)
-                    .foregroundStyle(Color(.systemGray2))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                ScrollView {
-                    ForEach((1...100), id: \.self) {
-                        if input != "" {
-                            if String("\($0)") == input {
-                                Text("\($0)")
-                                    .frame(width: 300)
-                            }
-                        }
-                        else {
-                            Text("\($0)")
-                                .frame(width: 300)
-                        }
-                    }
-                }
+        NavigationStack {
+            List(todos) { todo in
+                Text(String(format: "%@ %@", todo.title, todo.detail))
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .background(Color(.systemGray2))
+            .frame(width: .infinity, height: .infinity, alignment: .leading)
+            .frame(maxWidth: .infinity, alignment: .top)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading, content: {
-                    if isSearchBarShow {
-                        TextField("id", text: $input)
-                    }
-                    else {
-                        Text("a tool")
-                    }
+                    Text("Todo")
+                        .font(.title)
+                        .foregroundStyle(Color(.systemGray2))
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 })
                 ToolbarItem(placement: .topBarTrailing, content: {
                     Button(action: {
-                        isSearchBarShow = !isSearchBarShow
+                        isEditing = !isEditing
                     }, label: {
-                        Image(systemName: "magnifyingglass")
+                        Image(systemName: "plus")
+                    }).sheet(isPresented: $isEditing, content: {
+                        TodoEditor(todo: nil)
                     })
                 })
             }
@@ -69,25 +57,44 @@ struct MenuView: View {
     }
 }
 
-struct SettingView: View {
+struct TodoEditor: View {
+    @Environment(\.modelContext) private var modelContext
+    @Environment(\.dismiss) private var dismiss
+    let todo: Todo?
+    private var editorTitle: String {
+        todo == nil ? "Add Todo" : "Edit Todo"
+    }
+    @State private var title = ""
+    @State private var detail = ""
+    
     var body: some View {
-        NavigationView() {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-                .background(Color(.systemGray2))
-            Text("Setting")
-                .font(.title)
-                .foregroundStyle(Color(.systemGray2))
+        NavigationStack {
+            Form {
+                TextField("Title", text: $title)
+                TextField("Detail", text: $detail)
+            }
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text(editorTitle)
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Save") {
+                        withAnimation {
+                            save(context: modelContext)
+                            dismiss()
+                        }
+                    }
+                }
+            }
         }
-        .frame(width: 100, height: 500)
-        .padding(.leading, 10)
-        .tabItem {
-            Label("Setting", systemImage: "list.dash")
-        }
+    }
+    
+    private func save(context: ModelContext){
+        let newTodo = Todo(title: title, detail: detail)
+        context.insert(newTodo)
     }
 }
 
 #Preview {
-    ContentView()
+    ContentView().modelContainer(for: Todo.self, inMemory: true)
 }
