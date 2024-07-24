@@ -13,7 +13,7 @@ struct TodoView: View {
     @Query private var todos: [Todo]
     @State private var isEditing: Bool = false
     var body: some View {
-        NavigationStack {
+        NavigationStack(root: {
             List(todos) { todo in
                 Text(String(format: "Title:%@\nDetail:%@", todo.title, todo.detail))
             }
@@ -42,7 +42,7 @@ struct TodoView: View {
                 })
             }
             .padding(10)
-        }
+        })
         .tabItem {
             Label("Todo", systemImage: "list.dash")
         }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingView: View {
     var body: some View {
-        NavigationStack() {
+        NavigationStack(root: {
             List {
                 NavigationLink(destination: Text("Account"), label: {
                     Text("Account")
@@ -24,7 +24,7 @@ struct SettingView: View {
                 })
             }
             .padding(10)
-        }
+        })
         .tabItem {
             Label("Setting", systemImage: "list.dash")
         }

@@ -19,7 +19,7 @@ struct TodoEditor: View {
     @State private var detail = ""
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(root: {
             Form {
                 TextField("Title", text: $title)
                 TextField("Detail", text: $detail)
@@ -37,7 +37,7 @@ struct TodoEditor: View {
                     }
                 })
             }
-        }
+        })
     }
     
     private func save(context: ModelContext){
