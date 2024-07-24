@@ -13,39 +13,50 @@ struct ContentView: View {
             MenuView()
             SettingView()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
 struct MenuView: View {
-    @State var isSearchBarShow: Bool = false
+    @State var isSearchBarShow: Bool = true
     @State var input: String = ""
     var body: some View {
-        NavigationStack {
-            Text("Menu")
-                .font(.title)
-                .foregroundStyle(Color(.systemGray2))
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading, content: {
-                        if isSearchBarShow {
-                            TextField("input", text: $input)
-                        }
-                        else {
-                            Text("a tool")
-                        }
-                    })
-                    ToolbarItem(placement: .topBarTrailing, content: {
-                        Button(action: {
-                            isSearchBarShow = !isSearchBarShow
-                        }, label: {
-                            Image(systemName: "magnifyingglass")
-                        })
-                    })
+        NavigationView {
+            VStack {
+                Text("Menu")
+                    .font(.title)
+                    .foregroundStyle(Color(.systemGray2))
+                ScrollView {
+                    ForEach((1...100), id: \.self) {
+                        Text("\($0)")
+                            .frame(width: 300)
+                    }
                 }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading, content: {
+                    if isSearchBarShow {
+                        TextField("input", text: $input)
+                    }
+                    else {
+                        Text("a tool")
+                    }
+                })
+                ToolbarItem(placement: .topBarTrailing, content: {
+                    Button(action: {
+                        isSearchBarShow = !isSearchBarShow
+                    }, label: {
+                        Image(systemName: "magnifyingglass")
+                    })
+                })
+            }
+            .padding(10)
         }
         .tabItem {
             Label("Menu", systemImage: "list.dash")
         }
-        
+        .frame(maxWidth: .infinity, alignment: .topLeading)
     }
 }
 
