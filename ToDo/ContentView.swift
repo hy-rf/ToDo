@@ -14,7 +14,6 @@ struct ContentView: View {
             TodoView()
             SettingView()
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 

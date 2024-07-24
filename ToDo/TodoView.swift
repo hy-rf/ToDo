@@ -18,13 +18,11 @@ struct TodoView: View {
                 Text(String(format: "Title:%@\nDetail:%@", todo.title, todo.detail))
             }
             .background(Color(.systemGray2))
-            .frame(width: .infinity, height: .infinity, alignment: .leading)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading, content: {
                     Text("Todo")
                         .font(.title)
                         .foregroundStyle(Color(.systemGray2))
-                        .frame(maxWidth: .infinity, alignment: .leading)
                 })
                 ToolbarItem(placement: .topBarTrailing, content: {
                     Button(action: {
@@ -41,6 +39,5 @@ struct TodoView: View {
         .tabItem {
             Label("Menu", systemImage: "list.dash")
         }
-        .frame(maxWidth: .infinity, alignment: .topLeading)
     }
 }
