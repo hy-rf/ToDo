@@ -26,10 +26,19 @@ struct MenuView: View {
                 Text("Menu")
                     .font(.title)
                     .foregroundStyle(Color(.systemGray2))
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 ScrollView {
                     ForEach((1...100), id: \.self) {
-                        Text("\($0)")
-                            .frame(width: 300)
+                        if input != "" {
+                            if String("\($0)") == input {
+                                Text("\($0)")
+                                    .frame(width: 300)
+                            }
+                        }
+                        else {
+                            Text("\($0)")
+                                .frame(width: 300)
+                        }
                     }
                 }
             }
@@ -37,7 +46,7 @@ struct MenuView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading, content: {
                     if isSearchBarShow {
-                        TextField("input", text: $input)
+                        TextField("id", text: $input)
                     }
                     else {
                         Text("a tool")
@@ -62,7 +71,7 @@ struct MenuView: View {
 
 struct SettingView: View {
     var body: some View {
-        NavigationStack() {
+        NavigationView() {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundStyle(.tint)
