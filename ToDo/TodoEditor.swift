@@ -25,17 +25,17 @@ struct TodoEditor: View {
                 TextField("Detail", text: $detail)
             }
             .toolbar {
-                ToolbarItem(placement: .principal) {
+                ToolbarItem(placement: .principal, content: {
                     Text(editorTitle)
-                }
-                ToolbarItem(placement: .confirmationAction) {
+                })
+                ToolbarItem(placement: .confirmationAction, content: {
                     Button("Save") {
                         withAnimation {
                             save(context: modelContext)
                             dismiss()
                         }
                     }
-                }
+                })
             }
         }
     }

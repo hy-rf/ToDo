@@ -17,6 +17,13 @@ struct TodoView: View {
             List(todos) { todo in
                 Text(String(format: "Title:%@\nDetail:%@", todo.title, todo.detail))
             }
+            .overlay {
+                if todos.isEmpty {
+                    ContentUnavailableView {
+                        Label("No todos", systemImage: "list.bullet.clipboard")
+                    }
+                }
+            }
             .background(Color(.systemGray2))
             .toolbar {
                 ToolbarItem(placement: .topBarLeading, content: {
@@ -37,7 +44,7 @@ struct TodoView: View {
             .padding(10)
         }
         .tabItem {
-            Label("Menu", systemImage: "list.dash")
+            Label("Todo", systemImage: "list.dash")
         }
     }
 }

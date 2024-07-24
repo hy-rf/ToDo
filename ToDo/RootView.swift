@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct ContentView: View {
+struct RootView: View {
     var body: some View {
         TabView {
             TodoView()
@@ -18,5 +18,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView().modelContainer(for: Todo.self, inMemory: true)
+    RootView().modelContainer(for: Todo.self, inMemory: true)
 }
