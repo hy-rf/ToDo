@@ -21,7 +21,6 @@ struct TodoEditor: View {
     var body: some View {
         NavigationStack(root: {
             Form {
-                Text(editorTitle)
                 TextField("Title", text: $title)
                 TextField("Detail", text: $detail)
             }

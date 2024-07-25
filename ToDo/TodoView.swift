@@ -13,13 +13,16 @@ struct TodoView: View {
     @Query private var todos: [Todo]
     @State private var isEditing: Bool = false
     var body: some View {
-        NavigationStack(root: {
-            List(todos) { todo in
-                NavigationLink(destination: {
-                    TodoEditor(todo: todo, title: todo.title, detail: todo.detail)
-                }, label: {
-                    Text(String(format: "Title:%@\nDetail:%@", todo.title, todo.detail))
-                })
+        NavigationView(content: {
+            List {
+                ForEach(todos) { todo in
+                    NavigationLink(destination: {
+                        TodoEditor(todo: todo, title: todo.title, detail: todo.detail)
+                    }, label: {
+                        Text(String(format: "Title:%@\nDetail:%@", todo.title, todo.detail))
+                    })
+                }
+                .onDelete(perform: removeTodo)
             }
             .overlay {
                 if todos.isEmpty {
@@ -48,7 +51,14 @@ struct TodoView: View {
             .padding(10)
         })
         .tabItem {
-            Label("Todo", systemImage: "list.dash")
+            Label("Todo", systemImage: "house")
+        }
+    }
+    func removeTodo(at offsets: IndexSet) {
+        withAnimation {
+            for index in offsets {
+                modelContext.delete(todos[index])
+            }
         }
     }
 }
