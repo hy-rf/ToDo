@@ -11,17 +11,24 @@ import SwiftData
 struct TodoView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var todos: [Todo]
-    @State private var isEditing: Bool = false
+    @State private var isEdit: Bool = false
+    @State private var selectedTodo: Todo? = nil
     var body: some View {
         NavigationView(content: {
-            VStack(alignment: .leading ,content: {
+            VStack(content: {
                 List {
                     ForEach(todos) { todo in
-                        NavigationLink(destination: {
-                            TodoEditor(todo: todo, title: todo.title, detail: todo.detail)
-                        }, label: {
+                        HStack {
                             Text(String(format: "Title:%@\nDetail:%@", todo.title, todo.detail))
-                        })
+                                .frame(maxWidth: .infinity)
+#warning("Fix some time todo to edit not appear in sheet and button click outside pencil image")
+                            Button(action: {
+                                selectedTodo = todo
+                                isEdit = true
+                            }, label: {
+                                Image(systemName: "pencil").frame(maxWidth: .infinity)
+                            })
+                        }
                     }
                     .onDelete(perform: removeTodo)
                 }
@@ -37,11 +44,12 @@ struct TodoView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing, content: {
                     Button(action: {
-                        isEditing = !isEditing
+                        selectedTodo = nil
+                        isEdit = true
                     }, label: {
                         Image(systemName: "plus")
-                    }).sheet(isPresented: $isEditing, content: {
-                        TodoEditor(todo: nil, title: "", detail: "")
+                    }).sheet(isPresented: $isEdit, content: {
+                        TodoEditor(todo: selectedTodo, title: selectedTodo?.title ?? "", detail: selectedTodo?.detail ?? "")
                     })
                 })
             }

@@ -19,7 +19,7 @@ struct TodoEditor: View {
     @State var detail: String
     
     var body: some View {
-        NavigationStack(root: {
+        NavigationView(content: {
             Form(content: {
                 TextField("Title", text: $title)
                 TextField("Detail", text: $detail)
