@@ -50,6 +50,7 @@ struct TodoView: View {
                         Image(systemName: "plus")
                     }).sheet(isPresented: $isEdit, content: {
                         TodoEditor(todo: selectedTodo, title: selectedTodo?.title ?? "", detail: selectedTodo?.detail ?? "")
+                            .presentationDetents([.medium, .large])
                     })
                 })
             }
