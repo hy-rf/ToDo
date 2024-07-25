@@ -20,10 +20,10 @@ struct TodoEditor: View {
     
     var body: some View {
         NavigationStack(root: {
-            Form {
+            Form(content: {
                 TextField("Title", text: $title)
                 TextField("Detail", text: $detail)
-            }
+            })
             .toolbar {
                 ToolbarItem(placement: .principal, content: {
                     Text(editorTitle)

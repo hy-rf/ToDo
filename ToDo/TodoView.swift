@@ -31,7 +31,6 @@ struct TodoView: View {
                     }
                 }
             }
-            .background(Color(.systemGray2))
             .toolbar {
                 ToolbarItem(placement: .topBarLeading, content: {
                     Text("Todo")
@@ -61,4 +60,8 @@ struct TodoView: View {
             }
         }
     }
+}
+
+#Preview {
+    TodoView().modelContainer(for: Todo.self, inMemory: true)
 }
