@@ -9,18 +9,21 @@ import SwiftUI
 
 struct SettingView: View {
     var body: some View {
-        NavigationStack(root: {
-            List(content: {
-                NavigationLink(destination: Text("Account"), label: {
-                    Text("Account")
+        NavigationView(content: {
+            VStack(alignment: .leading, content: {
+                Text("Setting")
+                    .font(.largeTitle)
+                    .bold()
+                    .foregroundStyle(Color(.systemGray2))
+                List(content: {
+                    NavigationLink(destination: Text("Account"), label: {
+                        Text("Account")
+                    })
                 })
             })
-            .background(Color(.systemGray2))
             .toolbar {
-                ToolbarItem(placement: .topBarLeading, content: {
-                    Text("Setting")
-                        .font(.title)
-                        .foregroundStyle(Color(.systemGray2))
+                ToolbarItem(placement: .topBarTrailing, content: {
+                    Image(systemName: "magnifyingglass")
                 })
             }
             .padding(10)

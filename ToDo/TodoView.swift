@@ -14,29 +14,30 @@ struct TodoView: View {
     @State private var isEditing: Bool = false
     var body: some View {
         NavigationView(content: {
-            List {
-                ForEach(todos) { todo in
-                    NavigationLink(destination: {
-                        TodoEditor(todo: todo, title: todo.title, detail: todo.detail)
-                    }, label: {
-                        Text(String(format: "Title:%@\nDetail:%@", todo.title, todo.detail))
-                    })
+            VStack(alignment: .leading ,content: {
+                Text("Todo")
+                    .font(.largeTitle)
+                    .bold()
+                    .foregroundStyle(Color(.systemGray2))
+                List {
+                    ForEach(todos) { todo in
+                        NavigationLink(destination: {
+                            TodoEditor(todo: todo, title: todo.title, detail: todo.detail)
+                        }, label: {
+                            Text(String(format: "Title:%@\nDetail:%@", todo.title, todo.detail))
+                        })
+                    }
+                    .onDelete(perform: removeTodo)
                 }
-                .onDelete(perform: removeTodo)
-            }
-            .overlay {
-                if todos.isEmpty {
-                    ContentUnavailableView {
-                        Label("No todos", systemImage: "list.bullet.clipboard")
+                .overlay {
+                    if todos.isEmpty {
+                        ContentUnavailableView {
+                            Label("No todos", systemImage: "list.bullet.clipboard")
+                        }
                     }
                 }
-            }
+            })
             .toolbar {
-                ToolbarItem(placement: .topBarLeading, content: {
-                    Text("Todo")
-                        .font(.title)
-                        .foregroundStyle(Color(.systemGray2))
-                })
                 ToolbarItem(placement: .topBarTrailing, content: {
                     Button(action: {
                         isEditing = !isEditing
