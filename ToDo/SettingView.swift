@@ -11,22 +11,18 @@ struct SettingView: View {
     var body: some View {
         NavigationView(content: {
             VStack(alignment: .leading, content: {
-                Text("Setting")
-                    .font(.largeTitle)
-                    .bold()
-                    .foregroundStyle(Color(.systemGray2))
                 List(content: {
                     NavigationLink(destination: Text("Account"), label: {
                         Text("Account")
                     })
                 })
             })
+            .navigationTitle("Setting")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing, content: {
                     Image(systemName: "magnifyingglass")
                 })
             }
-            .padding(10)
         })
         .tabItem {
             Label("Setting", systemImage: "list.dash")

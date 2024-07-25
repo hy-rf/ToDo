@@ -15,10 +15,6 @@ struct TodoView: View {
     var body: some View {
         NavigationView(content: {
             VStack(alignment: .leading ,content: {
-                Text("Todo")
-                    .font(.largeTitle)
-                    .bold()
-                    .foregroundStyle(Color(.systemGray2))
                 List {
                     ForEach(todos) { todo in
                         NavigationLink(destination: {
@@ -37,6 +33,7 @@ struct TodoView: View {
                     }
                 }
             })
+            .navigationTitle("Todo")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing, content: {
                     Button(action: {
@@ -48,7 +45,6 @@ struct TodoView: View {
                     })
                 })
             }
-            .padding(10)
         })
         .tabItem {
             Label("Todo", systemImage: "house")
