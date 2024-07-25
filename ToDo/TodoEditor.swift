@@ -15,12 +15,13 @@ struct TodoEditor: View {
     private var editorTitle: String {
         todo == nil ? "Add Todo" : "Edit Todo"
     }
-    @State private var title = ""
-    @State private var detail = ""
+    @State var title: String
+    @State var detail: String
     
     var body: some View {
         NavigationStack(root: {
             Form {
+                Text(editorTitle)
                 TextField("Title", text: $title)
                 TextField("Detail", text: $detail)
             }
@@ -29,10 +30,19 @@ struct TodoEditor: View {
                     Text(editorTitle)
                 })
                 ToolbarItem(placement: .confirmationAction, content: {
-                    Button("Save", action: {
-                        save(context: modelContext)
-                        dismiss()
-                    })
+                    if let todo {
+                        Button("Save", action: {
+                            todo.title = title
+                            todo.detail = detail
+                            dismiss()
+                        })
+                    }
+                    else {
+                        Button("Save", action: {
+                            save(context: modelContext)
+                            dismiss()
+                        })
+                    }
                 })
             }
         })

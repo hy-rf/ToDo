@@ -15,7 +15,11 @@ struct TodoView: View {
     var body: some View {
         NavigationStack(root: {
             List(todos) { todo in
-                Text(String(format: "Title:%@\nDetail:%@", todo.title, todo.detail))
+                NavigationLink(destination: {
+                    TodoEditor(todo: todo, title: todo.title, detail: todo.detail)
+                }, label: {
+                    Text(String(format: "Title:%@\nDetail:%@", todo.title, todo.detail))
+                })
             }
             .overlay {
                 if todos.isEmpty {
@@ -37,7 +41,7 @@ struct TodoView: View {
                     }, label: {
                         Image(systemName: "plus")
                     }).sheet(isPresented: $isEditing, content: {
-                        TodoEditor(todo: nil)
+                        TodoEditor(todo: nil, title: "", detail: "")
                     })
                 })
             }
