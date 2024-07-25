@@ -21,10 +21,8 @@ struct TodoView: View {
                         HStack {
                             Text(String(format: "Title:%@\nDetail:%@", todo.title, todo.detail))
                                 .frame(maxWidth: .infinity)
-#warning("Fix some time todo to edit not appear in sheet and button click outside pencil image")
                             Button(action: {
                                 selectedTodo = todo
-                                isEdit = true
                             }, label: {
                                 Image(systemName: "pencil").frame(maxWidth: .infinity)
                             })
@@ -44,16 +42,17 @@ struct TodoView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing, content: {
                     Button(action: {
-                        selectedTodo = nil
-                        isEdit = true
+                        selectedTodo = Todo(title: "", detail: "")
                     }, label: {
                         Image(systemName: "plus")
-                    }).sheet(isPresented: $isEdit, content: {
-                        TodoEditor(todo: selectedTodo, title: selectedTodo?.title ?? "", detail: selectedTodo?.detail ?? "")
-                            .presentationDetents([.medium, .large])
                     })
                 })
             }
+            
+        })
+        .sheet(item: $selectedTodo, content: { item in
+            TodoEditor(todo: item)
+                .presentationDetents([.medium, .large])
         })
         .tabItem {
             Label("Todo", systemImage: "house")

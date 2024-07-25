@@ -11,12 +11,28 @@ import SwiftData
 struct TodoEditor: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
-    let todo: Todo?
+    let todo: Todo
     private var editorTitle: String {
-        todo == nil ? "Add Todo" : "Edit Todo"
+        if self.todo.title != "" && self.todo.detail != "" {
+            "Edit Todo"
+        } else {
+            "Add Todo"
+        }
     }
     @State var title: String
     @State var detail: String
+    private var mode: String
+    init(todo: Todo) {
+        self.todo = todo
+        self.title = todo.title
+        self.detail = todo.detail
+        // Safely unwrapping the optional todo and assigning the values
+        if self.todo.title != "" && self.todo.detail != "" {
+            self.mode = "edit"
+        } else {
+            self.mode = "add"
+        }
+    }
     
     var body: some View {
         NavigationView(content: {
@@ -29,17 +45,26 @@ struct TodoEditor: View {
                     Text(editorTitle)
                 })
                 ToolbarItem(placement: .confirmationAction, content: {
-                    if let todo {
+                    if title == "" && detail == "" {
                         Button("Save", action: {
-                            todo.title = title
-                            todo.detail = detail
-                            dismiss()
+                            
+                        }).disabled(true)
+                    }
+                    if mode == "edit" {
+                        Button("Save", action: {
+                            if title != "" && detail != "" {
+                                todo.title = title
+                                todo.detail = detail
+                                dismiss()
+                            }
                         })
                     }
                     else {
                         Button("Save", action: {
-                            save(context: modelContext)
-                            dismiss()
+                            if title != "" && detail != "" {
+                                save(context: modelContext)
+                                dismiss()
+                            }
                         })
                     }
                 })
