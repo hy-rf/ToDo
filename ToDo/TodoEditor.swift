@@ -44,7 +44,7 @@ struct TodoEditor: View {
                     Text(editorTitle)
                 })
                 ToolbarItem(placement: .confirmationAction, content: {
-                    if title == "" && detail == "" {
+                    if title == "" || detail == "" {
                         Button("Save", action: {
                             
                         }).disabled(true)
