@@ -14,7 +14,7 @@ struct TodoView: View {
     @State private var isEdit: Bool = false
     @State private var selectedTodo: Todo? = nil
     var body: some View {
-        NavigationView(content: {
+        NavigationStack(root: {
             List(content: {
                 ForEach(todos) { todo in
                     HStack(content: {

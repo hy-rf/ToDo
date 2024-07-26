@@ -13,7 +13,7 @@ struct SettingView: View {
         self.isAutoDeleteOn = false
     }
     var body: some View {
-        NavigationView(content: {
+        NavigationStack(root: {
             Form(content: {
                 Section("Data", content: {
                     Toggle(isOn: .constant(false), label: {
