@@ -15,7 +15,7 @@ struct TodoView: View {
     @State private var selectedTodo: Todo? = nil
     var body: some View {
         NavigationView(content: {
-            List {
+            List(content: {
                 ForEach(todos) { todo in
                     HStack {
                         Text(String(format: "Title:%@\nDetail:%@", todo.title, todo.detail))
@@ -28,7 +28,7 @@ struct TodoView: View {
                     }
                 }
                 .onDelete(perform: removeTodo)
-            }
+            })
             .overlay {
                 if todos.isEmpty {
                     ContentUnavailableView {
@@ -37,7 +37,7 @@ struct TodoView: View {
                 }
             }
             .navigationTitle("Todo")
-            .toolbar {
+            .toolbar(content: {
                 ToolbarItem(placement: .topBarTrailing, content: {
                     Button(action: {
                         selectedTodo = Todo(title: "", detail: "")
@@ -45,8 +45,7 @@ struct TodoView: View {
                         Image(systemName: "plus")
                     })
                 })
-            }
-            
+            })
         })
         .sheet(item: $selectedTodo, content: { item in
             TodoEditor(todo: item)

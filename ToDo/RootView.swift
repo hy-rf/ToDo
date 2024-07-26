@@ -10,10 +10,10 @@ import SwiftData
 
 struct RootView: View {
     var body: some View {
-        TabView {
+        TabView(content: {
             TodoView()
             SettingView()
-        }
+        })
     }
 }
 
