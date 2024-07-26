@@ -13,6 +13,7 @@ struct TodoView: View {
     @Query private var todos: [Todo]
     @State private var isEdit: Bool = false
     @State private var selectedTodo: Todo? = nil
+    @State private var searchText: String = ""
     var body: some View {
         NavigationStack(root: {
             List(content: {
@@ -49,6 +50,7 @@ struct TodoView: View {
                 })
             })
         })
+        .searchable(text: $searchText)
         .sheet(item: $selectedTodo, content: { item in
             TodoEditor(todo: item)
                 .presentationDetents([.medium, .large])
