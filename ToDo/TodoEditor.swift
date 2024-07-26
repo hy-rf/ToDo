@@ -26,7 +26,6 @@ struct TodoEditor: View {
         self.todo = todo
         self.title = todo.title
         self.detail = todo.detail
-        // Safely unwrapping the optional todo and assigning the values
         if self.todo.title != "" && self.todo.detail != "" {
             self.mode = "edit"
         } else {

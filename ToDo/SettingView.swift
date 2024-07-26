@@ -10,11 +10,9 @@ import SwiftUI
 struct SettingView: View {
     var body: some View {
         NavigationView(content: {
-            VStack(alignment: .leading, content: {
-                List(content: {
-                    NavigationLink(destination: Text("Account"), label: {
-                        Text("Account")
-                    })
+            List(content: {
+                NavigationLink(destination: Text("Account"), label: {
+                    Text("Account")
                 })
             })
             .navigationTitle("Setting")

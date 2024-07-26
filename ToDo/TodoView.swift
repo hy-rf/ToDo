@@ -15,29 +15,27 @@ struct TodoView: View {
     @State private var selectedTodo: Todo? = nil
     var body: some View {
         NavigationView(content: {
-            VStack(content: {
-                List {
-                    ForEach(todos) { todo in
-                        HStack {
-                            Text(String(format: "Title:%@\nDetail:%@", todo.title, todo.detail))
-                                .frame(maxWidth: .infinity)
-                            Button(action: {
-                                selectedTodo = todo
-                            }, label: {
-                                Image(systemName: "pencil").frame(maxWidth: .infinity)
-                            })
-                        }
-                    }
-                    .onDelete(perform: removeTodo)
-                }
-                .overlay {
-                    if todos.isEmpty {
-                        ContentUnavailableView {
-                            Label("No todos", systemImage: "list.bullet.clipboard")
-                        }
+            List {
+                ForEach(todos) { todo in
+                    HStack {
+                        Text(String(format: "Title:%@\nDetail:%@", todo.title, todo.detail))
+                            .frame(maxWidth: .infinity)
+                        Button(action: {
+                            selectedTodo = todo
+                        }, label: {
+                            Image(systemName: "pencil").frame(maxWidth: .infinity)
+                        })
                     }
                 }
-            })
+                .onDelete(perform: removeTodo)
+            }
+            .overlay {
+                if todos.isEmpty {
+                    ContentUnavailableView {
+                        Label("No todos", systemImage: "list.bullet.clipboard")
+                    }
+                }
+            }
             .navigationTitle("Todo")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing, content: {
