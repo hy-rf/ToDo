@@ -17,15 +17,17 @@ struct TodoView: View {
         NavigationView(content: {
             List(content: {
                 ForEach(todos) { todo in
-                    HStack {
+                    HStack(content: {
                         Text(String(format: "Title:%@\nDetail:%@", todo.title, todo.detail))
-                            .frame(maxWidth: .infinity)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                         Button(action: {
                             selectedTodo = todo
                         }, label: {
-                            Image(systemName: "pencil").frame(maxWidth: .infinity)
+                            Image(systemName: "pencil")
                         })
-                    }
+                        .clipped().buttonStyle(BorderlessButtonStyle())
+                        .frame(maxWidth: 100, alignment: .trailing)
+                    })
                 }
                 .onDelete(perform: removeTodo)
             })

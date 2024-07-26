@@ -8,11 +8,25 @@
 import SwiftUI
 
 struct SettingView: View {
+    @State private var isAutoDeleteOn: Bool
+    init() {
+        self.isAutoDeleteOn = false
+    }
     var body: some View {
         NavigationView(content: {
-            List(content: {
-                NavigationLink(destination: Text("Account"), label: {
-                    Text("Account")
+            Form(content: {
+                Section("Data", content: {
+                    Toggle(isOn: .constant(false), label: {
+                        Text("iCloud sync")
+                    })
+                    Toggle(isOn: $isAutoDeleteOn, label: {
+                        Text("Auto delete completed todo")
+                    })
+                    if isAutoDeleteOn {
+                        Toggle(isOn: $isAutoDeleteOn, label: {
+                            Text("Auto delete completed todo")
+                        })
+                    }
                 })
             })
             .navigationTitle("Setting")
