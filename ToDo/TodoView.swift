@@ -32,6 +32,7 @@ struct TodoView: View {
                 }
                 .onDelete(perform: removeTodo)
             })
+            .searchable(text: $searchText, placement: .toolbar, prompt: Text("Search..."))
             .overlay {
                 if todos.isEmpty {
                     ContentUnavailableView {
@@ -50,7 +51,6 @@ struct TodoView: View {
                 })
             })
         })
-        .searchable(text: $searchText)
         .sheet(item: $selectedTodo, content: { item in
             TodoEditor(todo: item)
                 .presentationDetents([.medium, .large])
