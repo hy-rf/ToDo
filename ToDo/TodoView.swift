@@ -16,30 +16,31 @@ struct TodoView: View {
     @State private var searchText: String = ""
     var body: some View {
         NavigationStack(root: {
+            if todos.isEmpty {
+                ContentUnavailableView {
+                    Label("No todos", systemImage: "list.bullet.clipboard")
+                }
+            }
             List(content: {
                 ForEach(todos) { todo in
                     HStack(content: {
-                        Text(String(format: "Title:%@\nDetail:%@", todo.title, todo.detail))
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        Button(action: {
-                            selectedTodo = todo
-                        }, label: {
-                            Image(systemName: "pencil")
-                        })
-                        .clipped().buttonStyle(BorderlessButtonStyle())
-                        .frame(maxWidth: 100, alignment: .trailing)
+                        if (searchText.isEmpty || todo.title.lowercased().contains(searchText.lowercased())) {
+                            Text(String(format: "Title:%@\nDetail:%@\nStart Date:%@", todo.title,todo.detail, todo.startDate as CVarArg))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            Button(action: {
+                                selectedTodo = todo
+                            }, label: {
+                                Image(systemName: "pencil")
+                            })
+                            .clipped().buttonStyle(BorderlessButtonStyle())
+                            .frame(maxWidth: 100, alignment: .trailing)
+                        }
                     })
                 }
                 .onDelete(perform: removeTodo)
             })
-            .searchable(text: $searchText, placement: .toolbar, prompt: Text("Search..."))
-            .overlay {
-                if todos.isEmpty {
-                    ContentUnavailableView {
-                        Label("No todos", systemImage: "list.bullet.clipboard")
-                    }
-                }
-            }
+            .scrollIndicators(.hidden)
+            .searchable(text: $searchText, placement: .toolbar, prompt: Text("Search Title..."))
             .navigationTitle("Todo")
             .toolbar(content: {
                 ToolbarItem(placement: .topBarTrailing, content: {
@@ -51,6 +52,9 @@ struct TodoView: View {
                 })
             })
         })
+        .refreshable {
+            print("todo refreshed")
+        }
         .sheet(item: $selectedTodo, content: { item in
             TodoEditor(todo: item)
                 .presentationDetents([.medium, .large])

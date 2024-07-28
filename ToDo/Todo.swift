@@ -12,9 +12,11 @@ import Foundation
 final class Todo {
     var title: String
     var detail: String
+    var startDate: Date
     
     init(title: String, detail: String) {
         self.title = title
         self.detail = detail
+        self.startDate = Date()
     }
 }
