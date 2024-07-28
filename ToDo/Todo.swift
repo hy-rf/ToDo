@@ -13,10 +13,12 @@ final class Todo {
     var title: String
     var detail: String
     var startDate: Date
+    var isEnd: Bool
     
     init(title: String, detail: String) {
         self.title = title
         self.detail = detail
         self.startDate = Date()
+        self.isEnd = false
     }
 }

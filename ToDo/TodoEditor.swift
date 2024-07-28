@@ -21,11 +21,13 @@ struct TodoEditor: View {
     }
     @State var title: String
     @State var detail: String
+    @State var isEnd: Bool
     private var mode: String
     init(todo: Todo) {
         self.todo = todo
         self.title = todo.title
         self.detail = todo.detail
+        self.isEnd = todo.isEnd
         if self.todo.title != "" && self.todo.detail != "" {
             self.mode = "edit"
         } else {
@@ -38,6 +40,11 @@ struct TodoEditor: View {
             Form(content: {
                 TextField("Title", text: $title)
                 TextField("Detail", text: $detail)
+                if mode == "edit" {
+                    Toggle(isOn: $isEnd, label: {
+                        Text("Finish")
+                    })
+                }
             })
             .toolbar {
                 ToolbarItem(placement: .principal, content: {
@@ -54,6 +61,7 @@ struct TodoEditor: View {
                             if title != "" && detail != "" {
                                 todo.title = title
                                 todo.detail = detail
+                                todo.isEnd = isEnd
                                 dismiss()
                             }
                         })

@@ -27,6 +27,9 @@ struct TodoView: View {
                         if (searchText.isEmpty || todo.title.lowercased().contains(searchText.lowercased())) {
                             Text(String(format: "Title:%@\nDetail:%@\nStart Date:%@", todo.title,todo.detail, todo.startDate as CVarArg))
                                 .frame(maxWidth: .infinity, alignment: .leading)
+                            if todo.isEnd {
+                                Image(systemName: "checkmark")
+                            }
                             Button(action: {
                                 selectedTodo = todo
                             }, label: {
@@ -53,7 +56,7 @@ struct TodoView: View {
             })
         })
         .refreshable {
-            print("todo refreshed")
+#warning("add refresh function")
         }
         .sheet(item: $selectedTodo, content: { item in
             TodoEditor(todo: item)
