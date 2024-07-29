@@ -10,11 +10,13 @@ import Foundation
 
 @Model
 final class Todo {
+    @Attribute(.unique) public let id: UUID
     var name: String
     var startDate: String
     var isEnd: Bool
     
-    init(name: String) {
+    init(id: UUID = .init(), name: String) {
+        self.id = id
         self.name = name
         self.startDate = {
             let dateFormatter = DateFormatter()
