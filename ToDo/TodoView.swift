@@ -26,7 +26,7 @@ struct TodoView: View {
                     HStack(content: {
                         if (searchText.isEmpty || todo.name.lowercased().contains(searchText.lowercased())) {
                             if filterBy.rawValue == "all" || (filterBy.rawValue == "finished" && todo.isEnd == true) || (filterBy.rawValue == "unfinished" && todo.isEnd == false) {
-                                Text(String(format: "%@\nStart Date:%@", todo.name, todo.startDate as CVarArg))
+                                Text(String(format: "%@\n%@", todo.name, todo.startDate))
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                 if todo.isEnd {
                                     Image(systemName: "checkmark")
