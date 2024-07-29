@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct TodoEditor: View {
+struct TodoEditorView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
     let todo: Todo

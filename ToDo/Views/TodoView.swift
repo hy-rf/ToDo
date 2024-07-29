@@ -70,7 +70,7 @@ struct TodoView: View {
             filterBy = .all
         }
         .sheet(item: $selectedTodo, content: { item in
-            TodoEditor(todo: item)
+            TodoEditorView(todo: item)
                 .presentationDetents([.medium, .large])
         })
         .tabItem {
