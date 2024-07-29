@@ -10,14 +10,12 @@ import Foundation
 
 @Model
 final class Todo {
-    var title: String
-    var detail: String
+    var name: String
     var startDate: Date
     var isEnd: Bool
     
-    init(title: String, detail: String) {
-        self.title = title
-        self.detail = detail
+    init(name: String) {
+        self.name = name
         self.startDate = Date()
         self.isEnd = false
     }

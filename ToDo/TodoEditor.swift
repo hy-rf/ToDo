@@ -13,22 +13,20 @@ struct TodoEditor: View {
     @Environment(\.dismiss) private var dismiss
     let todo: Todo
     private var editorTitle: String {
-        if self.todo.title != "" && self.todo.detail != "" {
+        if self.todo.name != "" {
             "Edit Todo"
         } else {
             "Add Todo"
         }
     }
-    @State var title: String
-    @State var detail: String
+    @State var name: String
     @State var isEnd: Bool
     private var mode: String
     init(todo: Todo) {
         self.todo = todo
-        self.title = todo.title
-        self.detail = todo.detail
+        self.name = todo.name
         self.isEnd = todo.isEnd
-        if self.todo.title != "" && self.todo.detail != "" {
+        if self.todo.name != "" {
             self.mode = "edit"
         } else {
             self.mode = "add"
@@ -38,8 +36,7 @@ struct TodoEditor: View {
     var body: some View {
         NavigationView(content: {
             Form(content: {
-                TextField("Title", text: $title)
-                TextField("Detail", text: $detail)
+                TextField("Title", text: $name)
                 if mode == "edit" {
                     Toggle(isOn: $isEnd, label: {
                         Text("Finish")
@@ -51,16 +48,15 @@ struct TodoEditor: View {
                     Text(editorTitle)
                 })
                 ToolbarItem(placement: .confirmationAction, content: {
-                    if title == "" || detail == "" {
+                    if name == "" {
                         Button("Save", action: {
                             
                         }).disabled(true)
                     }
                     if mode == "edit" {
                         Button("Save", action: {
-                            if title != "" && detail != "" {
-                                todo.title = title
-                                todo.detail = detail
+                            if name != "" {
+                                todo.name = name
                                 todo.isEnd = isEnd
                                 dismiss()
                             }
@@ -68,7 +64,7 @@ struct TodoEditor: View {
                     }
                     else {
                         Button("Save", action: {
-                            if title != "" && detail != "" {
+                            if name != "" {
                                 save(context: modelContext)
                                 dismiss()
                             }
@@ -80,7 +76,7 @@ struct TodoEditor: View {
     }
     
     private func save(context: ModelContext){
-        let newTodo = Todo(title: title, detail: detail)
+        let newTodo = Todo(name: name)
         context.insert(newTodo)
     }
 }

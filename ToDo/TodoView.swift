@@ -24,9 +24,9 @@ struct TodoView: View {
             List(content: {
                 ForEach(todos) { todo in
                     HStack(content: {
-                        if (searchText.isEmpty || todo.title.lowercased().contains(searchText.lowercased())) {
+                        if (searchText.isEmpty || todo.name.lowercased().contains(searchText.lowercased())) {
                             if filterBy.rawValue == "all" || (filterBy.rawValue == "finished" && todo.isEnd == true) || (filterBy.rawValue == "unfinished" && todo.isEnd == false) {
-                                Text(String(format: "Title:%@\nDetail:%@\nStart Date:%@", todo.title,todo.detail, todo.startDate as CVarArg))
+                                Text(String(format: "%@\nStart Date:%@", todo.name, todo.startDate as CVarArg))
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                 if todo.isEnd {
                                     Image(systemName: "checkmark")
@@ -45,12 +45,12 @@ struct TodoView: View {
                 .onDelete(perform: removeTodo)
             })
             .scrollIndicators(.hidden)
-            .searchable(text: $searchText, placement: .toolbar, prompt: Text("Search Title..."))
+            .searchable(text: $searchText, placement: .toolbar, prompt: Text("Search..."))
             .navigationTitle("Todo")
             .toolbar(content: {
                 ToolbarItem(placement: .topBarTrailing, content: {
                     Button(action: {
-                        selectedTodo = Todo(title: "", detail: "")
+                        selectedTodo = Todo(name: "")
                     }, label: {
                         Image(systemName: "plus")
                     })
