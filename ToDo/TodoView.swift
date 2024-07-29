@@ -9,34 +9,36 @@ import SwiftUI
 import SwiftData
 
 struct TodoView: View {
+    enum Filter: String, CaseIterable, Identifiable {
+        case all, finished, unfinished
+        var id: Self { self }
+    }
     @Environment(\.modelContext) private var modelContext
     @Query private var todos: [Todo]
     @State private var isEdit: Bool = false
     @State private var selectedTodo: Todo? = nil
     @State private var searchText: String = ""
+    @State private var filterBy: Filter = .all
     var body: some View {
         NavigationStack(root: {
-            if todos.isEmpty {
-                ContentUnavailableView {
-                    Label("No todos", systemImage: "list.bullet.clipboard")
-                }
-            }
             List(content: {
                 ForEach(todos) { todo in
                     HStack(content: {
                         if (searchText.isEmpty || todo.title.lowercased().contains(searchText.lowercased())) {
-                            Text(String(format: "Title:%@\nDetail:%@\nStart Date:%@", todo.title,todo.detail, todo.startDate as CVarArg))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            if todo.isEnd {
-                                Image(systemName: "checkmark")
+                            if filterBy.rawValue == "all" || (filterBy.rawValue == "finished" && todo.isEnd == true) || (filterBy.rawValue == "unfinished" && todo.isEnd == false) {
+                                Text(String(format: "Title:%@\nDetail:%@\nStart Date:%@", todo.title,todo.detail, todo.startDate as CVarArg))
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                if todo.isEnd {
+                                    Image(systemName: "checkmark")
+                                }
+                                Button(action: {
+                                    selectedTodo = todo
+                                }, label: {
+                                    Image(systemName: "pencil")
+                                })
+                                .clipped().buttonStyle(BorderlessButtonStyle())
+                                .frame(maxWidth: 100, alignment: .trailing)
                             }
-                            Button(action: {
-                                selectedTodo = todo
-                            }, label: {
-                                Image(systemName: "pencil")
-                            })
-                            .clipped().buttonStyle(BorderlessButtonStyle())
-                            .frame(maxWidth: 100, alignment: .trailing)
                         }
                     })
                 }
@@ -51,6 +53,14 @@ struct TodoView: View {
                         selectedTodo = Todo(title: "", detail: "")
                     }, label: {
                         Image(systemName: "plus")
+                    })
+                })
+                ToolbarItem(placement: .secondaryAction, content: {
+                    Picker(selection: $filterBy, content: {
+                        ForEach(Filter.allCases) { filterOption in
+                            Text(filterOption.rawValue)
+                        }
+                    }, label: {
                     })
                 })
             })
