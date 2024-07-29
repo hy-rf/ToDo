@@ -66,7 +66,8 @@ struct TodoView: View {
             })
         })
         .refreshable {
-#warning("add refresh function")
+            searchText = ""
+            filterBy = .all
         }
         .sheet(item: $selectedTodo, content: { item in
             TodoEditor(todo: item)
