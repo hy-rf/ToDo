@@ -24,7 +24,7 @@ struct TodoView: View {
             List(content: {
                 ForEach(todos) { todo in
                     if (searchText.isEmpty || todo.name.lowercased().contains(searchText.lowercased())) {
-                        if filterBy.rawValue == "all" || (filterBy.rawValue == "finished" && todo.isEnd == true) || (filterBy.rawValue == "unfinished" && todo.isEnd == false) {
+                        if filterBy == .all || (filterBy == .finished && todo.isEnd == true) || (filterBy == .unfinished && todo.isEnd == false) {
                             HStack(content: {
                                 Text(String(format: "%@\n%@", todo.name, todo.startDate))
                                     .frame(maxWidth: .infinity, alignment: .leading)
