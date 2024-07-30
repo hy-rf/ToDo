@@ -23,9 +23,9 @@ struct TodoView: View {
         NavigationStack(root: {
             List(content: {
                 ForEach(todos) { todo in
-                    HStack(content: {
-                        if (searchText.isEmpty || todo.name.lowercased().contains(searchText.lowercased())) {
-                            if filterBy.rawValue == "all" || (filterBy.rawValue == "finished" && todo.isEnd == true) || (filterBy.rawValue == "unfinished" && todo.isEnd == false) {
+                    if (searchText.isEmpty || todo.name.lowercased().contains(searchText.lowercased())) {
+                        if filterBy.rawValue == "all" || (filterBy.rawValue == "finished" && todo.isEnd == true) || (filterBy.rawValue == "unfinished" && todo.isEnd == false) {
+                            HStack(content: {
                                 Text(String(format: "%@\n%@", todo.name, todo.startDate))
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                 if todo.isEnd {
@@ -38,9 +38,10 @@ struct TodoView: View {
                                 })
                                 .clipped().buttonStyle(BorderlessButtonStyle())
                                 .frame(maxWidth: 100, alignment: .trailing)
-                            }
+                            })
+                            
                         }
-                    })
+                    }
                 }
                 .onDelete(perform: removeTodo)
             })
