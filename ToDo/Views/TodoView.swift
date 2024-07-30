@@ -15,7 +15,6 @@ struct TodoView: View {
     }
     @Environment(\.modelContext) private var modelContext
     @Query private var todos: [Todo]
-    @State private var isEdit: Bool = false
     @State private var selectedTodo: Todo? = nil
     @State private var searchText: String = ""
     @State private var filterBy: Filter = .all
