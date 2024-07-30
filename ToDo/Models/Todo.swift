@@ -9,7 +9,7 @@ import SwiftData
 import Foundation
 
 @Model
-final class Todo {
+final class Todo: Identifiable {
     @Attribute(.unique) public let id: UUID
     var name: String
     var startDate: String
