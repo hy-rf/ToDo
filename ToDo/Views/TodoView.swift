@@ -25,27 +25,7 @@ struct TodoView: View {
                 ForEach(todos) { todo in
                     if (searchText.isEmpty || todo.name.lowercased().contains(searchText.lowercased())) {
                         if filterBy == .all || (filterBy == .finished && todo.isEnd == true) || (filterBy == .unfinished && todo.isEnd == false) {
-                            HStack(content: {
-                                NavigationLink(destination: {
-                                    Text(String(format: "UUID: %@", todo.id as CVarArg))
-                                    Text(String(format: "%@\n%@", todo.name, todo.startDate))
-                                }, label: {
-                                    Text(String(format: "%@\n%@", todo.name, todo.startDate))
-                                })
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .layoutPriority(1)
-                                if todo.isEnd {
-                                    Image(systemName: "checkmark")
-                                }
-                                Button(action: {
-                                    selectedTodo = todo
-                                }, label: {
-                                    Image(systemName: "pencil")
-                                })
-                                .clipped().buttonStyle(BorderlessButtonStyle())
-//                                .frame(maxWidth: 100, alignment: .trailing)
-                            })
-                            
+                            TodoLink(todo: todo, selectedTodo: $selectedTodo)
                         }
                     }
                 }
@@ -96,3 +76,5 @@ struct TodoView: View {
 #Preview {
     TodoView().modelContainer(for: Todo.self, inMemory: true)
 }
+
+

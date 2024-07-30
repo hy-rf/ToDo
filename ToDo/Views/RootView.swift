@@ -18,5 +18,5 @@ struct RootView: View {
 }
 
 #Preview {
-    RootView()
+    RootView().modelContainer(for: Todo.self, inMemory: true)
 }
