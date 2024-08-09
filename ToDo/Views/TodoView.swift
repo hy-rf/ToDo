@@ -71,9 +71,3 @@ struct TodoView: View {
         }
     }
 }
-
-#Preview {
-    TodoView().modelContainer(for: Todo.self, inMemory: true)
-}
-
-

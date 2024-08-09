@@ -5,8 +5,8 @@
 //  Created by hyrf on 24/07/2024.
 //
 
-import SwiftData
 import Foundation
+import SwiftData
 
 @Model
 final class Todo: Identifiable {
@@ -14,6 +14,9 @@ final class Todo: Identifiable {
     var name: String
     var startDate: String
     var isEnd: Bool
+    
+    @Relationship()
+    var tags: [Tag]? = []
     
     init(id: UUID = .init(), name: String) {
         self.id = id
